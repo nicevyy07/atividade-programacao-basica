@@ -1,0 +1,74 @@
+# Sistema de gerenciamento de tarefas
+
+def menu():
+    print("\n=== MENU ===")
+    print("1 - Adicionar tarefa")
+    print("2 - Listar tarefas")
+    print("3 - Concluir tarefa")
+    print("4 - Remover tarefa")
+    print("0 - Sair")
+
+def listar_tarefas(tarefas):
+    if len(tarefas) == 0:
+        print("Nenhuma tarefa cadastrada.")
+    else:
+        print("\n=== LISTA DE TAREFAS ===")
+        for i, t in enumerate(tarefas):
+            print(f"{i} - {t['nome']} | Status: {t['status']}")
+
+def adicionar_tarefa(tarefas):
+    nome = input("Digite a tarefa: ").strip()
+    if nome == "":
+        print("A tarefa não pode estar vazia.")
+    else:
+        tarefas.append({"nome": nome, "status": "pendente"})
+        print("Tarefa adicionada com sucesso!")
+
+def concluir_tarefa(tarefas):
+    try:
+        indice = int(input("Número da tarefa: "))
+        if 0 <= indice < len(tarefas):
+            tarefas[indice]["status"] = "concluída"
+            print("Tarefa marcada como concluída!")
+        else:
+            print("Índice inválido.")
+    except ValueError:
+        print("Digite um número válido.")
+
+def remover_tarefa(tarefas):
+    try:
+        indice = int(input("Número da tarefa: "))
+        if 0 <= indice < len(tarefas):
+            tarefa_removida = tarefas.pop(indice)
+            print(f"Tarefa '{tarefa_removida['nome']}' removida!")
+        else:
+            print("Índice inválido.")
+    except ValueError:
+        print("Digite um número válido.")
+
+# Lista principal
+tarefas = []
+
+# Loop principal
+while True:
+    menu()
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        adicionar_tarefa(tarefas)
+
+    elif opcao == "2":
+        listar_tarefas(tarefas)
+
+    elif opcao == "3":
+        concluir_tarefa(tarefas)
+
+    elif opcao == "4":
+        remover_tarefa(tarefas)
+
+    elif opcao == "0":
+        print("Encerrando o sistema...")
+        break
+
+    else:
+        print("Opção inválida. Tente novamente.")
